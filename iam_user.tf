@@ -22,3 +22,8 @@ resource "aws_iam_group_membership" "assignment" {
 }
 
 #attach policy to the group
+resource "aws_iam_policy_attachment" "attachment" {
+    name = "attachment"
+    groups = [aws_iam_group.ec2-container-registry-power-user-group.name]
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
