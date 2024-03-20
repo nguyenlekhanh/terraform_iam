@@ -2,10 +2,10 @@ data "aws_availability_zones" "available" {}
 
 data "aws_ami" "ubuntu" {
     most_recent = true
-    owners = ["099720109477"]
+    owners = ["137112412989"]
     filter {
         name = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+        values = ["al2023-ami-2023.3.20240312.0-kernel-6.1-x86_64"]
     }
 }
 
@@ -17,7 +17,9 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "myFirstInstance" {
     ami = data.aws_ami.ubuntu.id
     instance_type = "t2.micro"
-    availability_zone = data.aws_availability_zones.available.names[0] key_name = var.keyname
+    availability_zone = data.aws_availability_zones.available.names[0]
+    key_name = var.keyname
+    iam_instance_profile = aws_iam_instance_profile.s3-bucket-role-instance-profile.name
     tags = {
         Name = "custom_instance"
     }
